@@ -5,24 +5,23 @@ verify_ssl = true
 
 [dev-packages]
 twine = "*"
+awsume = {editable = true,path = "."}
 pylint = "*"
-botostubs = "*"
-pytest = "*"
-pytest-cov = "*"
-pytest-pythonpath = "*"
-coverage = "*"
-watchdog = "*"
+botostubs = ">=0.12"
+pytest = ">=6.0.2"
+pytest-cov = ">=2.10.1"
+pytest-pythonpath = "~=0.7"
+coverage = ">=5.3"
+watchdog = ">=1.0.0"
 
 [packages]
-pluggy = "*"
+pluggy = "~=1.0.0"
 boto3 = "*"
-awsume = {editable = true,path = "."}
-psutil = "*"
-colorama = "*"
-coverage = "*"
-pyyaml = "*"
-xmltodict = "*"
-argcomplete = "*"
+psutil = ">=5.7.2"
+colorama = ">=0.4.0"
+pyyaml = ">=5.4"
+xmltodict = ">=0.12.0"
+argcomplete = ">=1.12.1"
 
 [scripts]
 test = "pytest test --cov=awsume --cov-report term"
