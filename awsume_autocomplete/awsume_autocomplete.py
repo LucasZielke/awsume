@@ -42,7 +42,8 @@ def main():
     profile_names = get_profile_names(credentials, config)
     autocomplete_file = str(Path("~/.awsume/autocomplete.json").expanduser())
     if os.path.isfile(autocomplete_file):
-        autocomplete = json.load(open(autocomplete_file))
+        with open(autocomplete_file) as f:
+            autocomplete = json.load(f)
         profile_names = uniquely_concat_lists(
             profile_names, autocomplete["profile-names"]
         )

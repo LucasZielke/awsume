@@ -2,7 +2,7 @@ import base64
 
 try:
     import xmltodict
-except:
+except ImportError:
     xmltodict = False
 
 from .exceptions import SAMLAssertionParseError, ValidationException

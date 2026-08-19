@@ -1,4 +1,3 @@
-
 import boto3
 
 from .app import Awsume
@@ -7,7 +6,7 @@ cached_awsume_app_object = None
 
 
 def awsume(
-    profile_name: str = None, *args: list, **kwargs: dict
+    profile_name: str | None = None, *args: list, **kwargs: dict
 ) -> boto3.Session | dict:
     cli_arguments = list(args) if args is not None else []
 

@@ -16,7 +16,7 @@ from .safe_print import safe_print
 VALID_CREDENTIAL_SOURCES = [None, "Environment", "Ec2InstanceMetadata", "EcsContainer"]
 try:
     import Levenshtein
-except:
+except ImportError:
     Levenshtein = False
 
 
@@ -138,9 +138,7 @@ def is_mutable_profile(profiles: dict, profile_name: str) -> dict:
     profile = profiles.get(profile_name)
     if not profile:
         return True
-    if profile.get("manager") == "awsume":
-        return True
-    return False
+    return profile.get("manager") == "awsume"
 
 
 def get_source_profile(profiles: dict, target_profile_name: str) -> dict:
@@ -169,9 +167,7 @@ def get_role_chain(
 
     role_chain = []
     while target_profile:
-        logger.debug(
-            f"target profile: {json.dumps(target_profile, default=str)}"
-        )
+        logger.debug(f"target profile: {json.dumps(target_profile, default=str)}")
         if target_profile_name in role_chain:
             raise exceptions.InvalidProfileError(
                 ",".join(role_chain), "cannot have circular role-chains"
@@ -307,9 +303,9 @@ def format_aws_profiles(
             profile_type = "Role" if is_role_profile else "User"
             # Assume source_profile is None unless we find otherwise afterwards.
             if is_role_profile:
-                if "source_profile" in profile.keys():
+                if "source_profile" in profile:
                     source_profile = profile["source_profile"]
-                elif "principal_arn" in profile.keys():
+                elif "principal_arn" in profile:
                     source_profile = profile["principal_arn"].split(":")[-1]
                 else:
                     source_profile = "None"

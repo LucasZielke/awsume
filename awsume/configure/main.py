@@ -148,7 +148,11 @@ def parse_args(argv: sys.argv) -> argparse.Namespace:
     return args
 
 
-def run(shell: str = None, alias_file: str = None, autocomplete_file: str = None):
+def run(
+    shell: str | None = None,
+    alias_file: str | None = None,
+    autocomplete_file: str | None = None,
+):
     if os.environ.get("AWSUME_SKIP_ALIAS_SETUP"):
         print("===== Skipping Alias Setup =====")
         return

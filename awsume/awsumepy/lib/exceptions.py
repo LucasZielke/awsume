@@ -2,15 +2,11 @@ from .config_management import CONFIG_MANAGEMENT_HELP
 
 
 class AwsumeException(Exception):
-    """"""
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
 
 class ProfileNotFoundError(AwsumeException):
-    """"""
-
     def __init__(self, profile_name="", message=""):
         self.profile_name = profile_name
         self.message = message
@@ -22,8 +18,6 @@ class ProfileNotFoundError(AwsumeException):
 
 
 class InvalidProfileError(AwsumeException):
-    """"""
-
     def __init__(self, profile_name, message=""):
         self.profile_name = profile_name
         self.message = message
@@ -33,8 +27,6 @@ class InvalidProfileError(AwsumeException):
 
 
 class ImmutableProfileError(AwsumeException):
-    """"""
-
     def __init__(self, profile_name, message=""):
         self.profile_name = profile_name
         self.message = message
@@ -44,8 +36,6 @@ class ImmutableProfileError(AwsumeException):
 
 
 class ValidationException(AwsumeException):
-    """"""
-
     def __init__(self, message="no message"):
         self.message = message
 
@@ -54,8 +44,6 @@ class ValidationException(AwsumeException):
 
 
 class ConfigParseException(AwsumeException):
-    """"""
-
     def __init__(self, file_name, message="no message", error=None):
         self.file_name = file_name
         self.message = message
@@ -66,8 +54,6 @@ class ConfigParseException(AwsumeException):
 
 
 class ConfigOperationException(AwsumeException):
-    """"""
-
     def __init__(self, message="no message"):
         self.message = message
 
@@ -76,8 +62,6 @@ class ConfigOperationException(AwsumeException):
 
 
 class UserAuthenticationError(AwsumeException):
-    """"""
-
     def __init__(self, message=""):
         self.message = message
 
@@ -86,8 +70,6 @@ class UserAuthenticationError(AwsumeException):
 
 
 class RoleAuthenticationError(AwsumeException):
-    """"""
-
     def __init__(self, message=""):
         self.message = message
 
@@ -96,8 +78,6 @@ class RoleAuthenticationError(AwsumeException):
 
 
 class SAMLAssertionNotFoundError(AwsumeException):
-    """"""
-
     def __init__(self, message=""):
         self.message = message
 
@@ -106,8 +86,6 @@ class SAMLAssertionNotFoundError(AwsumeException):
 
 
 class SAMLAssertionMissingRoleError(AwsumeException):
-    """"""
-
     def __init__(self, message=""):
         self.message = message
 
@@ -116,8 +94,6 @@ class SAMLAssertionMissingRoleError(AwsumeException):
 
 
 class SAMLRoleNotFoundError(AwsumeException):
-    """"""
-
     def __init__(self, principal_arn, role_arn, message=""):
         self.role_arn = role_arn
         self.principal_arn = principal_arn
@@ -132,8 +108,6 @@ class SAMLRoleNotFoundError(AwsumeException):
 
 
 class SAMLAssertionParseError(AwsumeException):
-    """"""
-
     def __init__(self, message=""):
         self.message = message
 
@@ -142,8 +116,6 @@ class SAMLAssertionParseError(AwsumeException):
 
 
 class NoCredentialsError(AwsumeException):
-    """"""
-
     def __init__(self, message=""):
         self.message = message
 
@@ -152,9 +124,7 @@ class NoCredentialsError(AwsumeException):
 
 
 class EarlyExit(AwsumeException):
-    """"""
-
-    def __init__(self, data: dict = None):
+    def __init__(self, data: dict | None = None):
         self.data = data
 
     def __str__(self):

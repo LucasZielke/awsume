@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 
 import dateutil
 
@@ -69,7 +69,7 @@ def valid_cache_session(cache_session: dict) -> bool:
             session_expiration = datetime.strptime(
                 session_expiration, "%Y-%m-%d %H:%M:%S"
             )
-        if session_expiration <= datetime.now():
+        if session_expiration <= datetime.now(UTC):
             logger.debug("Cache session has expired")
             return False
     if "AccessKeyId" not in cache_session:

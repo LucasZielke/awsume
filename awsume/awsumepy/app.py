@@ -10,8 +10,7 @@ import pluggy
 from ..autoawsume.process import kill_autoawsume
 from . import default_plugins, hookspec
 from .lib import aws as aws_lib
-from .lib import exceptions
-from .lib import saml as saml
+from .lib import exceptions, saml
 from .lib.autoawsume import create_autoawsume_profile
 from .lib.aws_files import add_section, get_aws_files
 from .lib.config_management import load_config
@@ -124,7 +123,7 @@ class Awsume:
 
         if len(roles) > 1:
             if args.role_arn and args.principal_arn:
-                principal_plus_role_arn = ",".join([args.principal_arn, args.role_arn])
+                principal_plus_role_arn = f"{args.principal_arn},{args.role_arn}"
                 if self.config.get("fuzzy-match"):
                     choice = difflib.get_close_matches(
                         principal_plus_role_arn, roles, cutoff=0
@@ -145,9 +144,7 @@ class Awsume:
                         args.profile_name,
                         "both role_arn and principal_arn are necessary for saml profiles",
                     )
-                principal_plus_profile_role_arn = ",".join(
-                    [profile_role_arn, principal_arn]
-                )
+                principal_plus_profile_role_arn = f"{profile_role_arn},{principal_arn}"
                 if principal_plus_profile_role_arn in roles:
                     choice = principal_plus_profile_role_arn
                 else:

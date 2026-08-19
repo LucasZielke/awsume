@@ -18,9 +18,7 @@ def get_session(*args, **kwargs):
     """Get a session, ignoring missing profiles from environment variables"""
     try:
         boto_session = boto3.session.Session(*args, **kwargs)
-    except (
-        botocore.exceptions.ProfileNotFound
-    ):  # catch expired autoawsume profiles
+    except botocore.exceptions.ProfileNotFound:  # catch expired autoawsume profiles
         if "AWS_PROFILE" in os.environ:
             os.environ.pop("AWS_PROFILE")
         if "AWS_DEFAULT_PROFILE" in os.environ:
@@ -33,15 +31,17 @@ def assume_role(
     source_credentials: dict,
     role_arn: str,
     session_name: str,
-    session_policy: str = None,
-    session_policy_arns: list[str] = [],
-    external_id: str = None,
-    region: str = None,
-    role_duration: int = None,
-    mfa_serial: str = None,
-    mfa_token: str = None,
+    session_policy: str | None = None,
+    session_policy_arns: list[str] | None = None,
+    external_id: str | None = None,
+    region: str | None = None,
+    role_duration: int | None = None,
+    mfa_serial: str | None = None,
+    mfa_token: str | None = None,
     tags: list | None = None,
 ) -> dict:
+    if session_policy_arns is None:
+        session_policy_arns = []
     if len(session_name) < 2:
         session_name = session_name.center(2, "_")
 
@@ -84,11 +84,11 @@ def assume_role(
 
 def get_session_token(
     source_credentials: dict,
-    region: str = None,
-    mfa_serial: str = None,
-    mfa_token: str = None,
+    region: str | None = None,
+    mfa_serial: str | None = None,
+    mfa_token: str | None = None,
     ignore_cache: bool = False,
-    duration_seconds: int = None,
+    duration_seconds: int | None = None,
 ) -> dict:
     cache_file_name = "aws-credentials-" + source_credentials.get("AccessKeyId")
     cache_session = cache_lib.read_aws_cache(cache_file_name)
@@ -149,7 +149,7 @@ def assume_role_with_saml(
     principal_arn: str,
     saml_assertion: str,
     region: str = "us-east-1",
-    role_duration: int = None,
+    role_duration: int | None = None,
 ) -> dict:
     logger.debug(f"Assuming role with saml: {role_arn}")
     role_sts_client = get_session().client("sts")  # type: botostubs.STS

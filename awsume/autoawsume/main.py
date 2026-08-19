@@ -2,7 +2,7 @@ import configparser
 import json
 import logging
 import time
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from logging.handlers import RotatingFileHandler
 
 import dateutil
@@ -46,9 +46,9 @@ def main():
                 )
             else:
                 source_expiration = None
-            if source_expiration is not None and source_expiration < datetime.now():
+            if source_expiration is not None and source_expiration < datetime.now(UTC):
                 logger.debug("Source is expired")
-                if expiration < datetime.now():
+                if expiration < datetime.now(UTC):
                     logger.debug("Role credentials are expired")
                     delete_profile(profile_name, credentials_file)
                 else:
@@ -56,7 +56,7 @@ def main():
                     expirations.append(expiration)
             else:
                 logger.debug("Source credentials are not expired")
-                if expiration - timedelta(seconds=60) < datetime.now():
+                if expiration - timedelta(seconds=60) < datetime.now(UTC):
                     logger.debug(
                         "Role credentials are expired or will expire in less than 60s"
                     )
@@ -72,9 +72,7 @@ def main():
                     expirations.append(expiration)
                     if source_expiration is not None:
                         expirations.append(source_expiration)
-        logger.debug(
-            f"Collected expirations: {json.dumps(expirations, default=str)}"
-        )
+        logger.debug(f"Collected expirations: {json.dumps(expirations, default=str)}")
 
         if not expirations:
             break
@@ -86,7 +84,7 @@ def main():
             0,
             (
                 earliest_expiration
-                - datetime.now().replace(tzinfo=earliest_expiration.tzinfo)
+                - datetime.now(UTC).replace(tzinfo=earliest_expiration.tzinfo)
             ).total_seconds()
             - 60,
         )

@@ -7,9 +7,10 @@ import yaml
 from .constants import AWSUME_CONFIG
 
 
-def safe_print(message: str, color: str = "", end: str = None):
+def safe_print(message: str, color: str = "", end: str | None = None):
     """Safely print so no data is interfering with the shell wrapper"""
-    config = yaml.safe_load(open(str(AWSUME_CONFIG), "r")) or {}
+    with open(str(AWSUME_CONFIG)) as acf:
+        config = yaml.safe_load(acf) or {}
     if not config:
         config = {"colors": True}
     if os.name == "nt" or config.get("colors") != True:

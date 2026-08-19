@@ -72,8 +72,9 @@ def load_config() -> dict:
 
     options = None
     try:
-        options = yaml.safe_load(open(str(constants.AWSUME_CONFIG), "r"))
-    except Exception as e:
+        with open(str(constants.AWSUME_CONFIG)) as acf:
+            options = yaml.safe_load(acf)
+    except (yaml.YAMLError, OSError) as e:
         raise exceptions.ConfigParseException(
             constants.AWSUME_CONFIG, message="Cannot parse config file", error=e
         )
@@ -87,12 +88,11 @@ def write_config(config: dict):
     if not os.path.exists(str(constants.AWSUME_DIR)):
         os.makedirs(str(constants.AWSUME_DIR))
     if not os.path.isfile(str(constants.AWSUME_CONFIG)):
-        open(str(constants.AWSUME_CONFIG), "a").close()
-
-    try:
-        yaml.safe_dump(config, open(str(constants.AWSUME_CONFIG), "w"), width=1000)
-    except Exception as e:
-        safe_print(f"Unable to write config: {e}", colorama.Fore.RED)
+        try:
+            with open(str(constants.AWSUME_CONFIG), "w") as acf:
+                yaml.safe_dump(config, acf, width=1000)
+        except (yaml.YAMLError, OSError) as e:
+            safe_print(f"Unable to write config: {e}", colorama.Fore.RED)
 
 
 def handle_config(operations: list):

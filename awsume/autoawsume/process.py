@@ -20,14 +20,10 @@ def kill_autoawsume():
 def kill(arguments: argparse.Namespace):
     _, credentials_file = get_aws_files(None, None)
     if arguments.profile_name:
-        logger.debug(
-            f"Stoping auto-refresh of profile {arguments.profile_name}"
-        )
+        logger.debug(f"Stoping auto-refresh of profile {arguments.profile_name}")
         profiles = read_aws_file(credentials_file)
         if f"autoawsume-{arguments.profile_name}" in profiles:
-            delete_section(
-                f"autoawsume-{arguments.profile_name}", credentials_file
-            )
+            delete_section(f"autoawsume-{arguments.profile_name}", credentials_file)
             profiles.pop(f"autoawsume-{arguments.profile_name}")
         if arguments.profile_name in profiles and profiles[arguments.profile_name].get(
             "autoawsume"

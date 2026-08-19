@@ -1,7 +1,7 @@
 import argparse
 import configparser
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 import colorama
@@ -37,9 +37,7 @@ def add_section(name: str, section: dict, file_name: str, overwrite: bool = Fals
     config.read(file_name)
     if config.has_section(name):
         if not overwrite:
-            safe_print(
-                f"Cannot overwrite data in {file_name}", colorama.Fore.RED
-            )
+            safe_print(f"Cannot overwrite data in {file_name}", colorama.Fore.RED)
             return
         config.remove_section(name)
     config.add_section(name)
@@ -85,6 +83,6 @@ def remove_expired_output_profiles(file_name: str) -> dict:
             expiration = datetime.strptime(
                 config.get(section, "expiration"), "%Y-%m-%d %H:%M:%S"
             )
-            if expiration < datetime.now():
+            if expiration < datetime.now(UTC):
                 config.remove_section(section)
     config.write(open(str(file_name), "w"))

@@ -11,7 +11,9 @@ def create_autoawsume_profile(
 ):
     logger.info("Creating autoawsume profile")
     _, credentials_file = aws_files_lib.get_aws_files(arguments, config)
-    autoawsume_profile_name = arguments.output_profile or f"autoawsume-{arguments.target_profile_name}"
+    autoawsume_profile_name = (
+        arguments.output_profile or f"autoawsume-{arguments.target_profile_name}"
+    )
     if not profile_lib.is_mutable_profile(profiles, autoawsume_profile_name):
         raise exceptions.ImmutableProfileError(
             autoawsume_profile_name, "not awsume-managed"

@@ -347,7 +347,9 @@ def post_add_arguments(
             parser.error(
                 "--principal-arn account id must be valid numeric account id of length 12"
             )
-        arguments.principal_arn = f"arn:{partition}:iam::{account_id}:role/{provider_name}"
+        arguments.principal_arn = (
+            f"arn:{partition}:iam::{account_id}:role/{provider_name}"
+        )
 
     if not arguments.profile_name:
         if arguments.role_arn:
@@ -665,7 +667,7 @@ def get_credentials_from_credential_process(
     target_profile_name: str,
 ):
     logger.info(
-        "Getting credentials from credential_process, profile: %s" % target_profile_name
+        f"Getting credentials from credential_process, profile: {target_profile_name}"
     )
     region = profile_lib.get_region(profiles, arguments, config)
     return_session = {}
@@ -676,8 +678,7 @@ def get_credentials_from_credential_process(
     )
     result = subprocess.run(
         credential_process_target_and_arguments,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
         env=credential_process_env,
     )
     logger.info(f"credential_process returncode: {result.returncode}")
@@ -690,9 +691,7 @@ def get_credentials_from_credential_process(
             or result.stdout.decode("utf-8")
             or "No output from the process"
         )
-        raise exceptions.NoCredentialsError(
-            f"credential_process error: {message}"
-        )
+        raise exceptions.NoCredentialsError(f"credential_process error: {message}")
     try:
         creds = json.loads(result.stdout.decode("utf-8"))
     except json.JSONDecodeError as err:

@@ -75,8 +75,7 @@ def get_args(cls, dist, header=None):
             )
             # pylint: disable=E1101
             args = cls._get_script_args(type_, name, header, script_text)
-            for res in args:
-                yield res
+            yield from args
 
 
 # pylint: disable=E1101
