@@ -1,2 +1,1 @@
-from . import main
-from . import process
+from . import main, process

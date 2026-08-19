@@ -23,9 +23,12 @@ Nothing
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def catch_profile_not_found_exception(config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception):
-    safe_print('Uh oh, a profile was not found')
+def catch_profile_not_found_exception(
+    config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception
+):
+    safe_print("Uh oh, a profile was not found")
 ```
 
 ## `catch_invalid_profile_exception`
@@ -49,9 +52,12 @@ Nothing
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def catch_invalid_profile_exception(config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception):
-    safe_print('Uh oh, a profile was not found')
+def catch_invalid_profile_exception(
+    config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception
+):
+    safe_print("Uh oh, a profile was not found")
 ```
 
 ## `catch_user_authentication_error`
@@ -75,9 +81,12 @@ Nothing
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def catch_user_authentication_error(config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception):
-    safe_print('Uh oh, a profile was not found')
+def catch_user_authentication_error(
+    config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception
+):
+    safe_print("Uh oh, a profile was not found")
 ```
 
 ## `catch_role_authentication_error`
@@ -101,7 +110,10 @@ Nothing
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def catch_role_authentication_error(config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception):
-    safe_print('Uh oh, a profile was not found')
+def catch_role_authentication_error(
+    config: dict, arguments: argparse.Namespace, profiles: dict, error: Exception
+):
+    safe_print("Uh oh, a profile was not found")
 ```

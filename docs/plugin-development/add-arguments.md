@@ -18,10 +18,11 @@ You can add your own custom arguments to awsume.
 import argparse
 from awsume.awsumepy import hookimpl
 
+
 @hookimpl
 def add_arguments(parser: argparse.ArgumentParser):
     try:
-        parser.add_argument('--test')
+        parser.add_argument("--test")
     except argparse.ArgumentError:
         # handle argument already taken here
         pass
@@ -47,9 +48,10 @@ It's recommended to add a `try`/`except` around the addition of arguments like b
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
 def pre_add_arguments(config: dict):
-    safe_print('Before adding arguments')
+    safe_print("Before adding arguments")
 ```
 
 ## `post_add_arguments`
@@ -70,8 +72,11 @@ def pre_add_arguments(config: dict):
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def post_add_arguments(config: dict, arguments: argparse.Namespace, parser: argparse.ArgumentParser):
+def post_add_arguments(
+    config: dict, arguments: argparse.Namespace, parser: argparse.ArgumentParser
+):
     if arguments.test:
-        safe_print('Custom flag was triggered')
+        safe_print("Custom flag was triggered")
 ```

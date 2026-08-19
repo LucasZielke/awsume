@@ -16,12 +16,12 @@ Get credentials
 
 ```python
 {
-  'AccessKeyId': '',
-  'SecretAccessKey': '',
-  'SessionToken': '',
-  'Region': '',
-  'Expiration': datetime(),
-  'SourceExpiration': datetime(),
+    "AccessKeyId": "",
+    "SecretAccessKey": "",
+    "SessionToken": "",
+    "Region": "",
+    "Expiration": datetime(),
+    "SourceExpiration": datetime(),
 }
 ```
 
@@ -31,15 +31,16 @@ Get credentials
 import argparse
 from awsume.awsumepy import hookimpl
 
+
 @hookimpl
 def get_credentials(config: dict, arguments: argparse.Namespace, profiles: dict):
     # ... handle getting credentials
     return {
-        'AccessKeyId': 'AKIA...',
-        'SecretAccessKey': 'SECRET',
-        'SessionToken': 'LONGSECRET',
-        'Region': 'us-east-2',
-        'Expiration': datetime()
+        "AccessKeyId": "AKIA...",
+        "SecretAccessKey": "SECRET",
+        "SessionToken": "LONGSECRET",
+        "Region": "us-east-2",
+        "Expiration": datetime(),
     }
 ```
 
@@ -57,7 +58,7 @@ This hook will only be called when awsume is given the `--with-saml` flag, and w
 - A `str` of the saml assertion:
 
 ```python
-'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZ...3NhbWwycDpSZXNwb25zZT4='
+"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZ...3NhbWwycDpSZXNwb25zZT4="
 ```
 
 ### Example
@@ -66,10 +67,11 @@ This hook will only be called when awsume is given the `--with-saml` flag, and w
 import argparse
 from awsume.awsumepy import hookimpl
 
+
 @hookimpl
 def get_credentials_with_saml(config: dict, arguments: argparse.Namespace):
     # ... handle getting saml assertion
-    saml_assertion = 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZ...3NhbWwycDpSZXNwb25zZT4='
+    saml_assertion = "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZ...3NhbWwycDpSZXNwb25zZT4="
     return saml_assertion
 ```
 
@@ -89,10 +91,10 @@ This hook will only be called when awsume is given the `--with-web-identity` fla
 
 ```python
 {
-  'AccessKeyId': '',
-  'SecretAccessKey': '',
-  'SessionToken': '',
-  'Region': '',
+    "AccessKeyId": "",
+    "SecretAccessKey": "",
+    "SessionToken": "",
+    "Region": "",
 }
 ```
 
@@ -102,14 +104,17 @@ This hook will only be called when awsume is given the `--with-web-identity` fla
 import argparse
 from awsume.awsumepy import hookimpl
 
+
 @hookimpl
-def get_credentials_with_web_identity(config: dict, arguments: argparse.Namespace, profiles: dict):
+def get_credentials_with_web_identity(
+    config: dict, arguments: argparse.Namespace, profiles: dict
+):
     # ... handle getting credentials
     return {
-        'AccessKeyId': 'AKIA...',
-        'SecretAccessKey': 'SECRET',
-        'SessionToken': 'LONGSECRET',
-        'Region': 'us-east-2',
+        "AccessKeyId": "AKIA...",
+        "SecretAccessKey": "SECRET",
+        "SessionToken": "LONGSECRET",
+        "Region": "us-east-2",
     }
 ```
 
@@ -131,9 +136,12 @@ def get_credentials_with_web_identity(config: dict, arguments: argparse.Namespac
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def pre_get_credentials(config: dict, arguments: argparse.Namespace, credentials_file: str, config_file: str):
-    safe_print('Before collecting aws profiles')
+def pre_get_credentials(
+    config: dict, arguments: argparse.Namespace, credentials_file: str, config_file: str
+):
+    safe_print("Before collecting aws profiles")
 ```
 
 ## `post_get_credentials`
@@ -155,7 +163,10 @@ def pre_get_credentials(config: dict, arguments: argparse.Namespace, credentials
 import argparse
 from awsume.awsumepy import hookimpl, safe_print
 
+
 @hookimpl
-def post_get_credentials(config: dict, arguments: argparse.Namespace, profiles: dict, credentials: dict):
-    safe_print('After collecting aws profiles')
+def post_get_credentials(
+    config: dict, arguments: argparse.Namespace, profiles: dict, credentials: dict
+):
+    safe_print("After collecting aws profiles")
 ```

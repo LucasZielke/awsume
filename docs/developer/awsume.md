@@ -57,7 +57,7 @@ Arguments are handled through argparse. Arguments are established through the `a
 If you're invoking non-interactively through the python `import` (i.e. `from awsume.awsumepy import awsume`) arguments by default are treated as command-line arguments, so you can call it like this:
 
 ```python
-awsume('myprofile', '--role-duration', '43200')
+awsume("myprofile", "--role-duration", "43200")
 ```
 
 There is also a transformation that happens on incoming arguments to make it a little more pythonic, so any keyword arguments (`role_duration=43200`) are converted into command-line arguments `--role-duration 43200`, any boolean keyword arguments are treated as a flag (`with_saml=True` -> `--with-saml`).

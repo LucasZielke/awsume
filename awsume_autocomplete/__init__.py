@@ -1,1 +1,1 @@
-from . awsume_autocomplete import main
+from .awsume_autocomplete import main

@@ -13,10 +13,10 @@ you would do this:
 ```python
 from awsume.awsumepy import awsume
 
-session = awsume('profile', '-r', region='us-west-2', mfa_token='123123')
+session = awsume("profile", "-r", region="us-west-2", mfa_token="123123")
 
 # The `session` is a boto3.Session object
-client = session.client('sts')
+client = session.client("sts")
 result = client.get_caller_identity()
 ```
 
@@ -33,14 +33,14 @@ def awsume(profile_name: str = None, *args: list, **kwargs: dict) -> boto3.Sessi
 For any keyword argument supplied, it will be converted from `this_case` to `--this-case` before being sent to the awsume driver. This means that the following two lines are identical:
 
 ```python
-awsume('profile', '--mfa-token', '123123')
-awsume('profile', mfa_token='123123')
+awsume("profile", "--mfa-token", "123123")
+awsume("profile", mfa_token="123123")
 ```
 
 If you specify a keyword argument to be a boolean, it will not pass the value to awsume, instead treating the argument like a on/off flag. The following two lines are identical:
 
 ```python
-awsume('profile', refresh=True)
+awsume("profile", refresh=True)
 ```
 
 ```bash
@@ -54,8 +54,8 @@ Note, that awsume was developed as a command-line tool, so there may be some str
 ```python
 from awsume.awsumepy import awsume
 
-session = awsume('profile', '-l')
-client = session.client('sts')
+session = awsume("profile", "-l")
+client = session.client("sts")
 result = client.get_caller_identity()
 print(result)
 ```

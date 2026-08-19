@@ -368,14 +368,8 @@
   - New format for exporting data:
   ``` python
   {
-    'AWSUME_FLAG' : 'Awsume',
-    'AWSUME_DATA' : [
-      'AWSUME_1',
-      'AWSUME_2',
-      'AWSUME_3',
-      'AWSUME_4',
-      'AWSUME_5'
-    ]
+      "AWSUME_FLAG": "Awsume",
+      "AWSUME_DATA": ["AWSUME_1", "AWSUME_2", "AWSUME_3", "AWSUME_4", "AWSUME_5"],
   }
   ```
 - Adds `__exit_awsume` callback to stop a `^C` from spamming your terminal
