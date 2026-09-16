@@ -337,10 +337,12 @@ def format_aws_profiles(
 
 def print_formatted_data(profile_data: list):  # pragma: no cover
     print("Listing...\n")
-    widths = [max(map(len, col)) for col in zip(*profile_data)]
+    widths = [max(map(len, col)) for col in zip(*profile_data, strict=True)]
     print("AWS Profiles".center(sum(widths) + 10, "="))
     for row in profile_data:
-        print("  ".join((val.ljust(width) for val, width in zip(row, widths))))
+        print(
+            "  ".join(val.ljust(width) for val, width in zip(row, widths, strict=True))
+        )
 
 
 def list_profile_data(
