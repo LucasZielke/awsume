@@ -20,7 +20,7 @@ It's helpful to be familiar with the following when developing for awsume:
 
 - Python development:
   - Virtualenvironments (including [pipenv](https://docs.pipenv.org/))
-  - The `setup.py` file (setuptools)
+  - The `pyproject.toml` file (setuptools / PEP 621 packaging)
   - [pytest](https://docs.pytest.org/en/stable/)
   - Modules and packages
 - Unit testing and module/function mocking

@@ -56,6 +56,13 @@ venv.bak/
 Pipfile.lock
 .tool-versions
 
+# uv
+# Lockfile is not committed for this library (deps resolved from pyproject).
+uv.lock
+.uv-cache/
+# uv-managed Python version pin (leave commented to commit a pin if desired)
+# .python-version
+
 # vscode
 .vscode
 

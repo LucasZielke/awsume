@@ -15,9 +15,9 @@ Get profile names
 
 ```python
 [
-    'profile-name1',
-    'profile-name2',
-    '...',
+    "profile-name1",
+    "profile-name2",
+    "...",
 ]
 ```
 
@@ -27,11 +27,12 @@ Get profile names
 import argparse
 from awsume.awsumepy import hookimpl
 
+
 @hookimpl
 def get_profile_names(config: dict, arguments: argparse.Namespace):
     return [
-        'profile1',
-        'profile2',
-        'profile3',
+        "profile1",
+        "profile2",
+        "profile3",
     ]
 ```

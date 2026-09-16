@@ -1,4 +1,5 @@
-import os, pathlib
+import os
+import pathlib
 
 BASH_AUTOCOMPLETE_SCRIPT = """
 _awsume() {
@@ -39,11 +40,12 @@ Register-ArgumentCompleter -Native -CommandName awsume -ScriptBlock {
 """
 
 SCRIPTS = {
-    'bash': BASH_AUTOCOMPLETE_SCRIPT,
-    'zsh': ZSH_AUTOCOMPLETE_SCRIPT,
-    'powershell': POWERSHELL_AUTOCOMPLETE_SCRIPT,
-    'fish': FISH_AUTOCOMPLETE_SCRIPT,
+    "bash": BASH_AUTOCOMPLETE_SCRIPT,
+    "zsh": ZSH_AUTOCOMPLETE_SCRIPT,
+    "powershell": POWERSHELL_AUTOCOMPLETE_SCRIPT,
+    "fish": FISH_AUTOCOMPLETE_SCRIPT,
 }
+
 
 def main(shell: str, autocomplete_file: str):
     autocomplete_file = str(pathlib.Path(autocomplete_file).expanduser())
@@ -52,28 +54,29 @@ def main(shell: str, autocomplete_file: str):
     basedir = os.path.dirname(autocomplete_file)
     if basedir and not os.path.exists(basedir):
         os.makedirs(basedir)
-    open(autocomplete_file, 'a').close()
-
-    if autocomplete_script in open(autocomplete_file, 'r').read():
-        print('Autocomplete script already in ' + autocomplete_file)
-    else:
-        with open(autocomplete_file, 'a') as f:
-            f.write('\n#Auto-Complete function for AWSume')
-            f.write(autocomplete_script)
-        print('Wrote autocomplete script to ' + autocomplete_file)
+    open(autocomplete_file, "a").close()
+    with open(autocomplete_file, "a+") as acf:
+        if autocomplete_script in acf.read():
+            print("Autocomplete script already in " + autocomplete_file)
+        else:
+            acf.write("\n#Auto-Complete function for AWSume")
+            acf.write(autocomplete_script)
+            print("Wrote autocomplete script to " + autocomplete_file)
 
     # install autocomplete function if zsh
-    if shell == 'zsh':
-        zsh_autocomplete_function_file = str(pathlib.Path('~/.awsume/zsh-autocomplete/_awsume').expanduser())
+    if shell == "zsh":
+        zsh_autocomplete_function_file = str(
+            pathlib.Path("~/.awsume/zsh-autocomplete/_awsume").expanduser()
+        )
         basedir = os.path.dirname(zsh_autocomplete_function_file)
         if basedir and not os.path.exists(basedir):
             os.makedirs(basedir)
         if not os.path.isfile(zsh_autocomplete_function_file):
-            open(zsh_autocomplete_function_file, 'w').close()
+            open(zsh_autocomplete_function_file, "w").close()
 
-        if ZSH_AUTOCOMPLETE_FUNCTION in open(zsh_autocomplete_function_file, 'r').read():
-            print('Zsh function already in ' + zsh_autocomplete_function_file)
-        else:
-            with open(zsh_autocomplete_function_file, 'a') as f:
-                f.write(ZSH_AUTOCOMPLETE_FUNCTION)
-            print('Wrote zsh function to ' + zsh_autocomplete_function_file)
+        with open(zsh_autocomplete_function_file, "a+") as zf:
+            if ZSH_AUTOCOMPLETE_FUNCTION in zf.read():
+                print("Zsh function already in " + zsh_autocomplete_function_file)
+            else:
+                zf.write(ZSH_AUTOCOMPLETE_FUNCTION)
+                print("Wrote zsh function to " + zsh_autocomplete_function_file)
