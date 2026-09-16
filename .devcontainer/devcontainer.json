@@ -1,0 +1,40 @@
+{
+  "name": "awsume (uv)",
+  // Microsoft's Python base image: non-root `vscode` user, good VS Code support.
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    // uv for dependency management, builds, and running tasks.
+    "ghcr.io/va-h/devcontainers-features/uv:1": {
+      "version": "latest"
+    },
+    // awsume is an AWS credentials tool; ship the AWS CLI for convenience.
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
+  },
+  // Install the project plus dev tooling (pytest, ruff) into a local venv.
+  "postCreateCommand": "uv sync --all-extras --dev",
+  // To use your host AWS credentials inside the container, add a bind mount, e.g.:
+  //   "mounts": [
+  //     "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,readonly"
+  //   ]
+  // (left out by default so the container still builds when ~/.aws is absent)
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "python.testing.pytestEnabled": true,
+        "python.testing.pytestArgs": ["test"],
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          }
+        }
+      }
+    }
+  }
+}
