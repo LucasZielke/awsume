@@ -1127,6 +1127,16 @@ def test_get_credentials_process_target_and_arguments_with_file(is_file: MagicMo
     )
     assert actual == expected
 
+@patch.object(Path, 'is_file')
+def test_get_credentials_process_target_and_arguments_with_quoted_arguments(is_file: MagicMock):
+    is_file.return_value(True)
+    process_file = Path(f"{AWSUME_DIR}/test.sh").expanduser()
+    expected = [str(process_file), "-c", "echo hello world"]
+    target_profile = {
+        "credential_process": f'{str(process_file)} -c "echo hello world"'
+    }
+    actual = default_plugins.get_credentials_process_target_and_arguments(target_profile)
+    assert actual == expected
 
 def test_get_credentials_process_target_and_arguments_without_file():
     process_file = Path(f"{AWSUME_DIR}/nonexistent.sh").expanduser()
