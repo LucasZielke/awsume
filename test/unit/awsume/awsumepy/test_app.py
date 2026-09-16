@@ -214,7 +214,7 @@ def test_get_saml_credentials(
     obj.plugin_manager.hook.get_credentials_with_saml.return_value = [assertion]
     get_role_chain.return_value = ["profilename"]
 
-    result = obj.get_saml_credentials(args, profiles)
+    obj.get_saml_credentials(args, profiles)
 
     assume_role_with_saml.assert_called_with(
         "arn:aws:iam::FAKE:role/FAKE",

@@ -718,7 +718,7 @@ def get_credentials_from_credential_process(
 
 
 def get_credentials_process_target_and_arguments(target_profile: dict):
-    credential_process = target_profile.get("credential_process", None)
+    credential_process = target_profile.get("credential_process")
     if credential_process is None:
         raise exceptions.ValidationException(
             f"credential_process not found in profile: {json.dumps(target_profile)}"

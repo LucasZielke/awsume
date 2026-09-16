@@ -1,5 +1,5 @@
 import argparse
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from unittest.mock import MagicMock, patch
 
 import dateutil
@@ -193,7 +193,7 @@ def test_get_source_profile_no_target_profile_name():
             "source_profile": "myuser",
         },
     }
-    assert profile.get_source_profile(profiles, "admin") == None
+    assert profile.get_source_profile(profiles, "admin") is None
 
 
 def test_get_source_profile_return_default():
@@ -337,7 +337,7 @@ def test_get_region_no_region():
             "role_arn": "arn:aws:iam:XXX:role/role_name",
         },
     }
-    assert profile.get_region(profiles, arguments, config) == None
+    assert profile.get_region(profiles, arguments, config) is None
 
 
 def test_get_mfa_serial():
@@ -391,7 +391,7 @@ def test_get_mfa_serial_none():
             "role_arn": "arn:aws:iam:XXX:role/role_name",
         },
     }
-    assert profile.get_mfa_serial(profiles, "myrole") == None
+    assert profile.get_mfa_serial(profiles, "myrole") is None
 
 
 @patch("builtins.input")

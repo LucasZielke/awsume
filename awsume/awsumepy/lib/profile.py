@@ -116,8 +116,8 @@ def validate_profile(
                     ),
                 )
         elif (
-            not "credential_process" in user_profile
-            and not "credential_process" in profile
+            "credential_process" not in user_profile
+            and "credential_process" not in profile
         ):
             if "aws_access_key_id" not in user_profile:
                 missing_keys.append("aws_access_key_id")

@@ -30,7 +30,7 @@ def main(shell: str, alias_file: str):
     basedir = os.path.dirname(alias_file)
     if basedir and not os.path.exists(basedir):
         os.makedirs(basedir)
-    
+
     with open(alias_file, "a+") as af:
         if alias in af.read():
             print("Alias already in " + alias_file)

@@ -1,5 +1,5 @@
 import argparse
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from unittest.mock import MagicMock, patch
 
 from awsume.awsumepy.lib import autoawsume

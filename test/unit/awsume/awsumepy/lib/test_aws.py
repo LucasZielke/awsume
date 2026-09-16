@@ -1,4 +1,4 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from unittest.mock import MagicMock, patch
 
 import dateutil
@@ -33,7 +33,7 @@ def test_assume_role(Session: MagicMock, safe_print: MagicMock):
         },
     }
 
-    result = aws.assume_role(
+    aws.assume_role(
         source_credentials,
         "myrolearn",
         "mysessionname",
@@ -83,7 +83,7 @@ def test_assume_role_minimal_parameters(Session: MagicMock, safe_print: MagicMoc
         },
     }
 
-    result = aws.assume_role(
+    aws.assume_role(
         source_credentials,
         "myrolearn",
         "mysessionname",
@@ -153,7 +153,7 @@ def test_get_session_token(
     read_aws_cache.return_value = {}
     valid_cache_session.return_value = False
 
-    result = aws.get_session_token(
+    aws.get_session_token(
         source_credentials,
         region="us-east-2",
         mfa_serial="mymfaserial",
@@ -207,7 +207,6 @@ def test_get_session_token_valid_cache(
     }
     read_aws_cache.return_value = {"Expiration": datetime.now(UTC)}
     valid_cache_session.return_value = True
-    write_aws_cache = MagicMock()
 
     result = aws.get_session_token(
         source_credentials,
@@ -273,7 +272,7 @@ def test_get_session_token_ignore_cache(
         SerialNumber="mymfaserial",
         TokenCode="123123",
     )
-    result.get("Expiration").astimezone.assert_called_with(dateutil.tz.tzlocal())
+    expiration.astimezone.assert_called_with(dateutil.tz.tzlocal())
     write_aws_cache.assert_called()
 
 
@@ -282,7 +281,7 @@ def test_get_session_token_ignore_cache(
 @patch("awsume.awsumepy.lib.cache.read_aws_cache")
 @patch.object(aws, "safe_print")
 @patch("boto3.session.Session")
-def test_get_session_token_ignore_cache(
+def test_get_session_token_raises_on_error(
     Session: MagicMock,
     safe_print: MagicMock,
     read_aws_cache: MagicMock,

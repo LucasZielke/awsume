@@ -1,0 +1,36 @@
+[tool.ruff]
+# Match the project's runtime support (see setup.py: python_requires).
+target-version = "py38"
+line-length = 88
+
+[tool.ruff.lint]
+# Explicit rule selection so results are deterministic across environments
+# rather than depending on ruff's ambient defaults.
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "C4",   # flake8-comprehensions
+    "PLC",  # pylint conventions
+    "PLE",  # pylint errors
+    "PLW",  # pylint warnings
+]
+ignore = [
+    # Line length is owned by the formatter; it already wraps what it can.
+    # Remaining long lines are strings/URLs/identifiers that cannot be split.
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# fastentrypoints.py is vendored; keep it as upstream ships it.
+"fastentrypoints.py" = ["PLC0415"]
+# Tests intentionally assign call results for readability and build
+# large fixtures; don't fight those patterns.
+"test/**" = ["PLW"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["awsume", "awsume_autocomplete"]
