@@ -88,11 +88,12 @@ def write_config(config: dict):
     if not os.path.exists(str(constants.AWSUME_DIR)):
         os.makedirs(str(constants.AWSUME_DIR))
     if not os.path.isfile(str(constants.AWSUME_CONFIG)):
-        try:
-            with open(str(constants.AWSUME_CONFIG), "w") as acf:
-                yaml.safe_dump(config, acf, width=1000)
-        except (yaml.YAMLError, OSError) as e:
-            safe_print(f"Unable to write config: {e}", colorama.Fore.RED)
+        open(str(constants.AWSUME_CONFIG), "a").close()
+
+    try:
+        yaml.safe_dump(config, open(str(constants.AWSUME_CONFIG), "w"), width=1000)  # noqa: SIM115
+    except Exception as e:
+        safe_print(f"Unable to write config: {e}", colorama.Fore.RED)
 
 
 def handle_config(operations: list):
