@@ -36,21 +36,23 @@ If you're running on a unix-like system, you must have an alias setup for awsume
 alias awsume=". awsume"
 ```
 
-Awsume will make an attempt to place this in a login script such as your `~/.bash_profile` or `~/.bashrc` when it's being installed, so you may need to restart your terminal or re-source your login file.
-
-If this automatic installation is causing you problems, you can disable it through setting an environment variable like this:
-
-```bash
-AWSUME_SKIP_ALIAS_SETUP=true pip install awsume
-```
-
-Sometimes, however, things (such as file permission issues) can prevent awsume from injecting the alias. If this is the case, we provided a utility to setup the alias after the fact, so check out the `awsume-configure` guide [here](../utilities/awsume-configure.md).
-
-For debug purposes, in order to get output from the post_install setup, you must use pip's `-v` flag like this:
+After installing awsume, run `awsume-configure` to add this alias (and the
+autocomplete script) to your shell's login file, such as `~/.bash_profile`,
+`~/.bashrc`, `$ZDOTDIR/.zshenv`, your fish functions, or your PowerShell
+profile:
 
 ```bash
-pip install awsume -v
+awsume-configure
 ```
+
+Once it finishes, restart your terminal or re-source your login file.
+
+`awsume-configure` will detect your installed shells automatically. To target
+a specific shell instead, pass `--shell`, e.g. `awsume-configure --shell bash`.
+You can skip the alias setup by setting `AWSUME_SKIP_ALIAS_SETUP` in your
+environment. If you'd rather configure things by hand, add the alias yourself
+and see the `awsume-configure` guide [here](../utilities/awsume-configure.md)
+for the details of each component.
 
 ## Quick Usage
 

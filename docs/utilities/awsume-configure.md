@@ -1,6 +1,9 @@
 # `awsume-configure`
 
-The `awsume-configure` command is intended to let you set up awsume on your own without having to reinstall awsume, just in case there was a problem during the initial installation of awsume.
+The `awsume-configure` command sets up awsume in your shell by installing the
+alias and autocomplete script into your login files. Run it once after
+installing awsume, and any time you need to (re)configure your shell
+integration.
 
 ## Usage
 
@@ -104,4 +107,4 @@ Register-ArgumentCompleter -Native -CommandName awsume -ScriptBlock {
 
 ---
 
-Again, if anything went wrong during the initial installation, you can attempt to set up awsume manually with the `awsume-configure` command, passing in the locations in which to install each component.
+Again, you can set up awsume with the `awsume-configure` command, passing in the locations in which to install each component.

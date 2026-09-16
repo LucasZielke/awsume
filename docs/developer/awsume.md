@@ -17,12 +17,11 @@ This is the core package for awsume.
 
 ### main
 
-You'll notice the main entrypoint for the CLI (from the `setup.py` file):
+You'll notice the main entrypoint for the CLI (from `pyproject.toml`):
 
-```python
-    entry_points={
-        'console_scripts': [
-            'awsumepy=awsume.awsumepy.main:main',
+```toml
+[project.scripts]
+awsumepy = "awsume.awsumepy.main:main"
 ```
 
 The `awsumepy` command points to the `awsume.awsumepy.main` file's `main` function. That main function includes a small bit of logger config (to help `--info` and `--debug` logs show before the main logger configuration gets invoked), and a call to the `run_awsume` function, which takes a list of arguments. The `run_awsume` function initializes an awsume "app" class, and executes the `.run` method on it.
@@ -110,4 +109,4 @@ It follows the same pattern as the `awsumepy` package in that the `main.py` func
 
 The logic for configuring the autocomplete script and alias differs from shell to shell, and is handled in the `autocomplete.py` and `alias.py` modules respectively.
 
-A `post_install.py` module declares the custom install command class that's used by the `setup.py` file to perform the first attempt at setting up the environment.
+Shell integration (the alias and autocomplete script) is set up by running the `awsume-configure` command after installation, which invokes this same logic.
