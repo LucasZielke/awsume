@@ -36,6 +36,15 @@ autoawsume = "awsume.autoawsume.main:main"
 awsume-configure = "awsume.configure.main:main"
 awsume-autocomplete = "awsume_autocomplete:main"
 
+# Development tooling (PEP 735 dependency group), installed by `uv sync`.
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "coverage",
+    "ruff",
+]
+
 [tool.setuptools]
 # The shell wrappers (bash/zsh/fish/powershell/cmd) are installed as scripts.
 # There is no static PEP 621 equivalent, so they stay under tool.setuptools.
