@@ -50,8 +50,7 @@ script-files = [
 version = { attr = "awsume.__data__.version" }
 
 [tool.setuptools.packages.find]
-# Equivalent to the previous find_packages(); include the two top-level
-# packages and their subpackages, excluding tests.
+# Include the two top-level packages and their subpackages, excluding tests.
 include = ["awsume*", "awsume_autocomplete*"]
 exclude = ["test*"]
 
