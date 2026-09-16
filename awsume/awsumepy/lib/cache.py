@@ -68,9 +68,16 @@ def valid_cache_session(cache_session: dict) -> bool:
     if cache_session.get("Expiration"):
         session_expiration = cache_session["Expiration"]
         if isinstance(cache_session["Expiration"], str):
+            # Cached expirations are written in local wall-clock time by
+            # write_aws_cache (via .astimezone(tzlocal())), so parse them back
+            # as local time. strptime yields a naive datetime; attach the local
+            # tz so it can be compared against the timezone-aware datetime.now(UTC).
             session_expiration = datetime.strptime(
                 session_expiration, "%Y-%m-%d %H:%M:%S"
-            )
+            ).replace(tzinfo=dateutil.tz.tzlocal())
+        elif session_expiration.tzinfo is None:
+            # Defensive: a naive datetime from elsewhere is assumed UTC.
+            session_expiration = session_expiration.replace(tzinfo=UTC)
         if session_expiration <= datetime.now(UTC):
             logger.debug("Cache session has expired")
             return False

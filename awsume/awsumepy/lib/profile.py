@@ -21,8 +21,7 @@ except ImportError:
 
 
 def parse_time(date_time: datetime):
-    date_time.replace(tzinfo=dateutil.tz.tzlocal())
-    return date_time.strftime("%Y-%m-%d %H:%M:%S")
+    return date_time.astimezone(dateutil.tz.tzlocal()).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def profile_to_credentials(profile: dict) -> dict:
