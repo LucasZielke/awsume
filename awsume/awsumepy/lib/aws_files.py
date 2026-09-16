@@ -42,9 +42,10 @@ def add_section(name: str, section: dict, file_name: str, overwrite: bool = Fals
         config.remove_section(name)
     config.add_section(name)
     config.set(name, "manager", "awsume")
-    for key in section:
-        config.set(name, key, str(section[key]))
-    config.write(open(str(file_name), "w"))
+    for key, value in section.items():
+        config.set(name, key, str(value))
+    with open(str(file_name), "w") as f:
+        config.write(f)
 
 
 def get_section(name: str, file_name: str):
@@ -58,7 +59,8 @@ def delete_section(name: str, file_name: str):
     config.read(file_name)
     if config.has_section(name):
         config.remove_section(name)
-    config.write(open(str(file_name), "w"))
+    with open(str(file_name), "w") as f:
+        config.write(f)
 
 
 def read_aws_file(file_name: str) -> dict:
@@ -85,4 +87,5 @@ def remove_expired_output_profiles(file_name: str) -> dict:
             )
             if expiration < datetime.now(UTC):
                 config.remove_section(section)
-    config.write(open(str(file_name), "w"))
+    with open(str(file_name), "w") as f:
+        config.write(f)

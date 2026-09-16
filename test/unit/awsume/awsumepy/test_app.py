@@ -94,7 +94,7 @@ def test_parse_args_refresh_autocomplete(
 
     json_dump.assert_called_with(
         {"profile-names": ["profile1", "profile2", "profile3", "pluginProfile"]},
-        open.return_value,
+        open.return_value.__enter__.return_value,
     )
     open.assert_called()
     obj.plugin_manager.hook.get_profile_names.assert_called_with(

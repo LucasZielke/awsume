@@ -77,7 +77,7 @@ def load_config() -> dict:
     except (yaml.YAMLError, OSError) as e:
         raise exceptions.ConfigParseException(
             constants.AWSUME_CONFIG, message="Cannot parse config file", error=e
-        )
+        ) from e
     if options is None:
         options = defaults
         write_config(options)

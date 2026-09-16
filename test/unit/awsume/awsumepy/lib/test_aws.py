@@ -254,7 +254,7 @@ def test_get_session_token_ignore_cache(
     read_aws_cache.return_value = {}
     valid_cache_session.return_value = True
 
-    result = aws.get_session_token(
+    aws.get_session_token(
         source_credentials,
         region="us-east-2",
         mfa_serial="mymfaserial",
@@ -288,7 +288,6 @@ def test_get_session_token_raises_on_error(
     valid_cache_session: MagicMock,
     write_aws_cache: MagicMock,
 ):
-    expiration = MagicMock()
     source_credentials = {
         "AccessKeyId": "AKIA...",
         "SecretAccessKeyId": "SECRET",

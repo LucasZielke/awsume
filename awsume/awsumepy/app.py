@@ -66,7 +66,8 @@ class Awsume:
                 arguments=args,
             )
             profile_names = [y for x in result for y in x]
-            json.dump({"profile-names": profile_names}, open(autocomplete_file, "w"))
+            with open(autocomplete_file, "w") as f:
+                json.dump({"profile-names": profile_names}, f)
             raise exceptions.EarlyExit()
         if args.list_plugins:
             for plugin_name, _ in self.plugin_manager.list_name_plugin():
@@ -248,7 +249,7 @@ class Awsume:
                 config=self.config, arguments=args, profiles=profiles, error=e
             )
             raise
-        if type(credentials) == list:  # pragma: no cover
+        if isinstance(credentials, list):  # pragma: no cover
             credentials = next((_ for _ in credentials if _), {})  # pragma: no cover
         self.plugin_manager.hook.post_get_credentials(
             config=self.config,

@@ -299,11 +299,12 @@ def post_add_arguments(
         kill(arguments)
         raise exceptions.EarlyExit()
 
-    if arguments.with_saml:
-        if bool(arguments.role_arn) is not bool(arguments.principal_arn):
-            parser.error(
-                "both or neither --principal-arn and --role-arn must be specified with saml"
-            )
+    if arguments.with_saml and bool(arguments.role_arn) is not bool(
+        arguments.principal_arn
+    ):
+        parser.error(
+            "both or neither --principal-arn and --role-arn must be specified with saml"
+        )
     if not arguments.with_saml and arguments.principal_arn:
         parser.error("--principal-arn can only be specified with --with-saml")
 
@@ -680,6 +681,7 @@ def get_credentials_from_credential_process(
         credential_process_target_and_arguments,
         capture_output=True,
         env=credential_process_env,
+        check=False,
     )
     logger.info(f"credential_process returncode: {result.returncode}")
     logger.debug("credential_process stdout: {}".format(result.stdout.decode("utf-8")))
@@ -697,7 +699,7 @@ def get_credentials_from_credential_process(
     except json.JSONDecodeError as err:
         raise exceptions.ValidationException(
             f"Invalid credentials returned from credential_process: {err}"
-        )
+        ) from err
     logger.debug(f"Obtained creds: {creds}")
     if not creds:
         raise exceptions.NoCredentialsError(

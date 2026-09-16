@@ -13,7 +13,7 @@ def safe_print(message: str, color: str = "", end: str | None = None):
         config = yaml.safe_load(acf) or {}
     if not config:
         config = {"colors": True}
-    if os.name == "nt" or config.get("colors") != True:
+    if os.name == "nt" or not config.get("colors"):
         color = ""
     print(
         str(color) + str(message) + colorama.Style.RESET_ALL, end=end, file=sys.stderr

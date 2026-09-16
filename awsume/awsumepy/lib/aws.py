@@ -77,7 +77,7 @@ def assume_role(
         )
         role_session["Region"] = region or boto_session.region_name
     except Exception as e:
-        raise RoleAuthenticationError(str(e))
+        raise RoleAuthenticationError(str(e)) from e
     logger.debug("Role credentials received")
     return role_session
 
@@ -124,7 +124,7 @@ def get_session_token(
             )
             user_session["Region"] = region or boto_session.region_name
         except Exception as e:
-            raise UserAuthenticationError(str(e))
+            raise UserAuthenticationError(str(e)) from e
         logger.debug("Session token received")
         cache_lib.write_aws_cache(cache_file_name, user_session)
     return user_session
@@ -140,7 +140,7 @@ def get_account_id(credentials: dict):
         ).client("sts")  # type: botostubs.STS
         response = sts_client.get_caller_identity()
         return response.get("Account", "Unavailable")
-    except:
+    except Exception:
         return "Unavailable"
 
 
@@ -170,7 +170,7 @@ def assume_role_with_saml(
         )
         role_session["Region"] = region
     except Exception as e:
-        raise RoleAuthenticationError(str(e))
+        raise RoleAuthenticationError(str(e)) from e
     logger.debug("SAML Role credentials received")
     safe_print(
         "Role credentials will expire {}".format(

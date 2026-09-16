@@ -3,6 +3,9 @@ from setuptools import find_packages, setup
 import awsume
 from awsume.configure.post_install import CustomInstall
 
+with open("README.md") as f:
+    long_description = f.read()
+
 setup(
     name=awsume.__NAME__,
     packages=find_packages(),
@@ -10,7 +13,7 @@ setup(
     author=awsume.__AUTHOR__,
     author_email=awsume.__AUTHOR_EMAIL__,
     description=awsume.__DESCRIPTION__,
-    long_description=open("README.md").read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     license=awsume.__LICENSE__,
     url=awsume.__HOMEPAGE__,

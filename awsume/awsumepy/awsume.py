@@ -16,7 +16,7 @@ def awsume(
         if not isinstance(value, bool):
             cli_arguments.append(str(value))
 
-    global cached_awsume_app_object  # this prevents numerous unique objects, such as AWS SDK, from being created
+    global cached_awsume_app_object  # noqa: PLW0603  # this prevents numerous unique objects, such as AWS SDK, from being created
     if cached_awsume_app_object:
         app = cached_awsume_app_object
     else:

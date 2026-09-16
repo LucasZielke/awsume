@@ -23,12 +23,13 @@ def read_aws_cache(cache_file_name: str) -> dict:
     if os.path.isfile(cache_path):
         logger.debug("Cache file found")
         try:
-            session = json.load(open(cache_path))
-            if session.get("Expiration") and type(session.get("Expiration")) == str:
+            with open(cache_path) as f:
+                session = json.load(f)
+            if session.get("Expiration") and isinstance(session.get("Expiration"), str):
                 session["Expiration"] = datetime.strptime(
                     session["Expiration"], "%Y-%m-%d %H:%M:%S"
                 )
-        except:
+        except Exception:
             logger.debug(
                 "There was an error reading from the cache file", exc_info=True
             )
@@ -47,16 +48,17 @@ def write_aws_cache(cache_file_name: str, session: dict) -> dict:
     expiration = session["Expiration"].astimezone(dateutil.tz.tzlocal())
     expiration = expiration.strftime("%Y-%m-%d %H:%M:%S")
     try:
-        json.dump(
-            {
-                **session,
-                "Expiration": expiration,
-            },
-            open(cache_path, "w"),
-            indent=2,
-            default=str,
-        )
-    except:
+        with open(cache_path, "w") as f:
+            json.dump(
+                {
+                    **session,
+                    "Expiration": expiration,
+                },
+                f,
+                indent=2,
+                default=str,
+            )
+    except Exception:
         logger.debug("There was an error writing to the cache file", exc_info=True)
     session["Expiration"] = datetime.strptime(expiration, "%Y-%m-%d %H:%M:%S")
     return session
@@ -65,7 +67,7 @@ def write_aws_cache(cache_file_name: str, session: dict) -> dict:
 def valid_cache_session(cache_session: dict) -> bool:
     if cache_session.get("Expiration"):
         session_expiration = cache_session["Expiration"]
-        if type(cache_session["Expiration"]) == str:
+        if isinstance(cache_session["Expiration"], str):
             session_expiration = datetime.strptime(
                 session_expiration, "%Y-%m-%d %H:%M:%S"
             )

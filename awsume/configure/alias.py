@@ -17,15 +17,9 @@ end
 def main(shell: str, alias_file: str):
     alias_file = str(pathlib.Path(alias_file).expanduser())
     if shell == "fish":
-        if which("pyenv"):
-            alias = PYENV_FISH_ALIAS
-        else:
-            alias = FISH_ALIAS
+        alias = PYENV_FISH_ALIAS if which("pyenv") else FISH_ALIAS
     else:
-        if which("pyenv"):
-            alias = PYENV_ALIAS
-        else:
-            alias = DEFAULT_ALIAS
+        alias = PYENV_ALIAS if which("pyenv") else DEFAULT_ALIAS
 
     basedir = os.path.dirname(alias_file)
     if basedir and not os.path.exists(basedir):
