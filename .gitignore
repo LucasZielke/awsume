@@ -72,3 +72,6 @@ uv.lock
 
 # sandbox files
 *sandbox*
+
+# setuptools-scm generated version file
+awsume/_version.py

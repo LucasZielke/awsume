@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=77.0.0"]
+requires = ["setuptools>=77.0.0", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -19,7 +19,7 @@ dependencies = [
     "pluggy",
     "pyyaml",
 ]
-# Version is read statically from awsume/__data__.py (see tool.setuptools.dynamic).
+# Version is derived from git tags by setuptools-scm (see [tool.setuptools_scm]).
 dynamic = ["version"]
 
 [project.urls]
@@ -55,8 +55,28 @@ script-files = [
     "shell_scripts/awsume.fish",
 ]
 
-[tool.setuptools.dynamic]
-version = { attr = "awsume.__data__.version" }
+[tool.setuptools_scm]
+# Version is derived from git tags. Tagging convention: v-prefixed PEP 440
+# versions, e.g. `v4.5.5` (release) and `v4.5.5rc1` (release candidate).
+#
+# The resolved version is written to awsume/_version.py so it is importable at
+# runtime from a built/installed tree (see awsume/__data__.py). This file is
+# generated and git-ignored.
+version_file = "awsume/_version.py"
+#
+# version_scheme = "guess-next-dev" (the default): a clean tag `v4.5.5` yields
+# `4.5.5`; commits after the tag bump to the next patch as a dev pre-release,
+# e.g. `4.5.6.dev3` (3 commits past v4.5.5). This gives untagged "test" builds
+# a unique, monotonically increasing version.
+version_scheme = "guess-next-dev"
+#
+# local_scheme = "node-and-date": appends a local segment with the short git
+# hash (and a dirty-date when the tree has uncommitted changes), e.g.
+# `4.5.6.dev3+g<hash>`. This makes branch/commit builds distinguishable.
+local_scheme = "node-and-date"
+#
+# Fallback used when building from an unversioned tree (no git, no tags):
+fallback_version = "0.0.0"
 
 [tool.setuptools.packages.find]
 # Include the two top-level packages and their subpackages, excluding tests.
