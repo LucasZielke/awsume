@@ -1,9 +1,12 @@
-name: Upload Python Package
+name: "Publish release to PyPI"
 
 on:
   push:
     tags:
-      - '*'
+      # Publish on version tags, e.g. v0.1.0
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+rc[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+[ab][0-9]+"
 
 jobs:
   build:
@@ -11,18 +14,23 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: false
+
+      - name: Build distributions
+        run: uv build
 
       - name: Run tests
         run: |
           uv sync --all-extras --dev
           uv run pytest test --cov=awsume --cov-report term
-
-      - name: Build distributions
-        run: uv build
 
       - name: Upload distributions as artifacts
         uses: actions/upload-artifact@v4
@@ -34,9 +42,13 @@ jobs:
     needs:
       - build
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
     steps:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: false
 
       - name: Download distributions artifact
         uses: actions/download-artifact@v4
@@ -44,7 +56,8 @@ jobs:
           name: dist
           path: dist/
 
+      - name: Generate PEP 740 attestations
+        uses: astral-sh/attest-action@f589a42a7efb6fe400b4f400de60b4bc90390027 # v0.0.6
+
       - name: Publish to PyPI
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
         run: uv publish
